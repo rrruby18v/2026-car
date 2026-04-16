@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>四車深度評比報告 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700;900&family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #14181f;
+    --surface2: #1c2230;
+    --border: #252b38;
+    --text: #e8eaf0;
+    --text-dim: #7a8099;
+    --accent: #d4a853;
+    --accent2: #5b9bd5;
+    --a: #e05555;
+    --b: #e07a35;
+    --c: #4daa7c;
+    --d: #5b9bd5;
+    --gold: #d4a853;
+    --silver: #9aa5b8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Noto Sans TC', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    position: relative;
+    padding: 80px 40px 60px;
+    text-align: center;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content:'';
+    position:absolute; inset:0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,168,83,0.12) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .report-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    opacity: 0.8;
+  }
+  h1 {
+    font-family: 'Noto Serif TC', serif;
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, #fff 40%, var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .hero-sub {
+    color: var(--text-dim);
+    font-size: 14px;
+    letter-spacing: 1px;
+    margin-bottom: 32px;
+  }
+  .car-tags {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .car-tag {
+    padding: 6px 18px;
+    border-radius: 2px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    font-family: 'DM Mono', monospace;
+  }
+  .tag-a { background: rgba(224,85,85,0.15); color: var(--a); border: 1px solid rgba(224,85,85,0.4); }
+  .tag-b { background: rgba(224,122,53,0.15); color: var(--b); border: 1px solid rgba(224,122,53,0.4); }
+  .tag-c { background: rgba(77,170,124,0.15); color: var(--c); border: 1px solid rgba(77,170,124,0.4); }
+  .tag-d { background: rgba(91,155,213,0.15); color: var(--d); border: 1px solid rgba(91,155,213,0.4); }
+
+  /* LAYOUT */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  .section { padding: 56px 0 40px; border-bottom: 1px solid var(--border); }
+  .section:last-child { border-bottom: none; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 36px;
+  }
+  .section-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    min-width: 32px;
+  }
+  .section-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .section-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* SCORE MATRIX */
+  .score-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .score-row {
+    display: grid;
+    grid-template-columns: 200px repeat(4, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+  .score-row:last-child { border-bottom: none; }
+  .score-row.header {
+    background: var(--surface2);
+  }
+  .score-cell {
+    padding: 16px 14px;
+    font-size: 13px;
+    border-right: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+  }
+  .score-cell:last-child { border-right: none; }
+  .score-row.header .score-cell {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    justify-content: center;
+    text-align: center;
+  }
+  .score-row.header .score-cell:first-child { justify-content: flex-start; color: var(--text-dim); }
+  .score-label { color: var(--text-dim); font-size: 12.5px; }
+  .score-val {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .stars {
+    display: flex;
+    gap: 2px;
+  }
+  .star { width: 10px; height: 10px; border-radius: 50%; }
+  .star.filled { background: var(--gold); }
+  .star.half { background: linear-gradient(90deg, var(--gold) 50%, var(--border) 50%); }
+  .star.empty { background: var(--border); }
+  .score-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .score-row.highlight { background: rgba(212,168,83,0.04); }
+
+  /* SCORE COLORS */
+  .s5 { color: #4daa7c; }
+  .s4 { color: #90c46e; }
+  .s35 { color: var(--gold); }
+  .s3 { color: #d4a853; }
+  .s25 { color: #e07a35; }
+  .s2 { color: var(--a); }
+
+  /* DETAIL CARDS */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  @media(max-width:700px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .score-row { grid-template-columns: 120px repeat(4,1fr); }
+    .score-cell { padding: 12px 8px; font-size: 11px; }
+  }
+  .car-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .car-card:hover { border-color: rgba(212,168,83,0.35); }
+  .card-header {
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .car-badge {
+    width: 32px; height: 32px;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    font-size: 13px;
+    flex-shrink: 0;
+  }
+  .badge-a { background: rgba(224,85,85,0.2); color: var(--a); border: 1px solid rgba(224,85,85,0.4); }
+  .badge-b { background: rgba(224,122,53,0.2); color: var(--b); border: 1px solid rgba(224,122,53,0.4); }
+  .badge-c { background: rgba(77,170,124,0.2); color: var(--c); border: 1px solid rgba(77,170,124,0.4); }
+  .badge-d { background: rgba(91,155,213,0.2); color: var(--d); border: 1px solid rgba(91,155,213,0.4); }
+  .card-title { font-weight: 700; font-size: 15px; color: #fff; }
+  .card-sub { font-size: 11.5px; color: var(--text-dim); margin-top: 1px; }
+  .card-body { padding: 16px 20px; }
+
+  .spec-list { list-style: none; }
+  .spec-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 12.5px;
+    gap: 12px;
+  }
+  .spec-item:last-child { border-bottom: none; }
+  .spec-key { color: var(--text-dim); min-width: 100px; flex-shrink: 0; }
+  .spec-val { color: var(--text); text-align: right; }
+  .tag-good { background: rgba(77,170,124,0.15); color: #4daa7c; padding: 2px 8px; border-radius: 2px; font-size: 11px; font-family: 'DM Mono', monospace; }
+  .tag-ok { background: rgba(212,168,83,0.15); color: var(--gold); padding: 2px 8px; border-radius: 2px; font-size: 11px; font-family: 'DM Mono', monospace; }
+  .tag-weak { background: rgba(224,85,85,0.12); color: #e05555; padding: 2px 8px; border-radius: 2px; font-size: 11px; font-family: 'DM Mono', monospace; }
+
+  /* FEATURE GRID */
+  .feature-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+  .feature-table th, .feature-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+    text-align: center;
+    vertical-align: middle;
+  }
+  .feature-table th:first-child, .feature-table td:first-child {
+    text-align: left;
+    color: var(--text-dim);
+    min-width: 160px;
+  }
+  .feature-table th {
+    background: var(--surface2);
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  .feature-table tr:last-child td { border-bottom: none; }
+  .feature-table td:last-child { border-right: none; }
+  .feature-table th:last-child { border-right: none; }
+  .check { color: #4daa7c; font-size: 16px; }
+  .cross { color: rgba(255,255,255,0.15); font-size: 16px; }
+  .partial { color: var(--gold); font-size: 13px; }
+  .feature-section {
+    background: var(--surface2);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    text-align: left !important;
+    padding: 10px 14px !important;
+  }
+  .table-wrap {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    overflow-x: auto;
+  }
+
+  /* VERDICT */
+  .verdict-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  @media(max-width:700px) { .verdict-grid { grid-template-columns: repeat(2,1fr); } }
+  .verdict-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .verdict-card::before {
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0;
+    height: 3px;
+  }
+  .verdict-card.va::before { background: var(--a); }
+  .verdict-card.vb::before { background: var(--b); }
+  .verdict-card.vc::before { background: var(--c); }
+  .verdict-card.vd::before { background: var(--d); }
+  .verdict-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+  }
+  .verdict-card.va .verdict-badge { color: var(--a); }
+  .verdict-card.vb .verdict-badge { color: var(--b); }
+  .verdict-card.vc .verdict-badge { color: var(--c); }
+  .verdict-card.vd .verdict-badge { color: var(--d); }
+  .verdict-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+  .verdict-score-big {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1;
+    margin: 12px 0 4px;
+  }
+  .verdict-card.va .verdict-score-big { color: var(--a); }
+  .verdict-card.vb .verdict-score-big { color: var(--b); }
+  .verdict-card.vc .verdict-score-big { color: var(--c); }
+  .verdict-card.vd .verdict-score-big { color: var(--d); }
+  .verdict-rank {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+  .verdict-pros, .verdict-cons {
+    font-size: 11.5px;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+  .verdict-pros::before { content:'▲ '; color: #4daa7c; }
+  .verdict-cons::before { content:'▼ '; color: var(--a); }
+
+  /* RECOMMEND */
+  .recommend-box {
+    background: linear-gradient(135deg, rgba(212,168,83,0.08) 0%, rgba(91,155,213,0.06) 100%);
+    border: 1px solid rgba(212,168,83,0.3);
+    border-radius: 4px;
+    padding: 32px 36px;
+    margin-top: 40px;
+  }
+  .recommend-title {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .recommend-text {
+    font-size: 13.5px;
+    color: var(--text);
+    line-height: 1.9;
+  }
+  .recommend-text strong { color: var(--gold); }
+
+  /* FOOTER */
+  .report-footer {
+    padding: 32px 40px;
+    text-align: center;
+    color: var(--text-dim);
+    font-size: 11px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 1px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ANIM */
+  @keyframes fadeIn {
+    from { opacity:0; transform: translateY(16px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+  .section { animation: fadeIn 0.5s ease both; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="report-label">深度評比報告 ／ 2026年版</div>
+  <h1>四車全面評比<br>功能・安全・智能</h1>
+  <div class="hero-sub">台中北區 ／ 苗栗南苗 適用版本　│　評比日期：2026.04</div>
+  <div class="car-tags">
+    <span class="car-tag tag-a">A — Mazda CX-30</span>
+    <span class="car-tag tag-b">B — KIA STONIC 2026</span>
+    <span class="car-tag tag-c">C — ŠKODA Kamiq</span>
+    <span class="car-tag tag-d">D — VW T-Roc</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 01 綜合評分矩陣 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <div>
+        <div class="section-title">綜合評分矩陣</div>
+        <div class="section-desc">以 5 分為滿分，涵蓋六大評比維度</div>
+      </div>
+    </div>
+
+    <div class="score-grid">
+      <div class="score-row header">
+        <div class="score-cell">評比項目</div>
+        <div class="score-cell tag-a" style="color:var(--a)">A<br>CX-30</div>
+        <div class="score-cell tag-b" style="color:var(--b)">B<br>STONIC</div>
+        <div class="score-cell tag-c" style="color:var(--c)">C<br>Kamiq</div>
+        <div class="score-cell tag-d" style="color:var(--d)">D<br>T-Roc</div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-cell"><span class="score-label">主動安全 ADAS</span></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s5">4.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s5">4.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s5">4.5</span></div></div>
+      </div>
+
+      <div class="score-row highlight">
+        <div class="score-cell"><span class="score-label">被動安全（氣囊等）</span></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s5">5.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-cell"><span class="score-label">車載智能科技</span></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s35">3.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s5">4.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+      </div>
+
+      <div class="score-row highlight">
+        <div class="score-cell"><span class="score-label">動力效能表現</span></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s35">3.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s5">4.5</span></div></div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-cell"><span class="score-label">內裝功能 / 舒適性</span></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s5">4.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s35">3.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+      </div>
+
+      <div class="score-row highlight">
+        <div class="score-cell"><span class="score-label">空間 / 機能實用性</span></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s35">3.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num s4">4.0</span></div></div>
+      </div>
+
+      <div class="score-row" style="background:var(--surface2)">
+        <div class="score-cell"><span style="font-weight:700;color:#fff">加權總分</span></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num" style="font-size:20px;color:var(--a);font-family:'Noto Serif TC',serif;font-weight:900">23.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num" style="font-size:20px;color:var(--b);font-family:'Noto Serif TC',serif;font-weight:900">24.5</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num" style="font-size:20px;color:var(--c);font-family:'Noto Serif TC',serif;font-weight:900">25.0</span></div></div>
+        <div class="score-cell"><div class="score-val"><span class="score-num" style="font-size:20px;color:var(--d);font-family:'Noto Serif TC',serif;font-weight:900">25.0</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 主動安全 ADAS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <div>
+        <div class="section-title">主動安全 ADAS 詳細對比</div>
+        <div class="section-desc">全速域跟車、緊急煞車、車道、盲點等核心功能</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th>功能項目</th>
+            <th style="color:var(--a)">A CX-30</th>
+            <th style="color:var(--b)">B STONIC</th>
+            <th style="color:var(--c)">C Kamiq</th>
+            <th style="color:var(--d)">D T-Roc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="feature-section" colspan="5">跟車 / 巡航</td></tr>
+          <tr>
+            <td>全速域 ACC 主動跟車</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>Stop & Go 靜止再啟動</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>高速公路輔助 HDA</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span> <small style="color:var(--gold)">2026新增</small></td>
+            <td><span class="partial">△ 部分車型</span></td>
+            <td><span class="check">●</span> Travel Assist</td>
+          </tr>
+          <tr>
+            <td>導航智慧巡航 NSCC</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span> <small style="color:var(--gold)">2026新增</small></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="cross">○</span></td>
+          </tr>
+          <tr><td class="feature-section" colspan="5">緊急煞車 / 碰撞</td></tr>
+          <tr>
+            <td>AEB 自動緊急煞車</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>行人 / 腳踏車偵測</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>路口偵測煞車</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="cross">○</span></td>
+          </tr>
+          <tr>
+            <td>二次碰撞預煞 MKB</td>
+            <td><span class="check">●</span></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr><td class="feature-section" colspan="5">車道輔助</td></tr>
+          <tr>
+            <td>車道偏移警示 LDWS</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>車道維持 / 修正輔助</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>車道置中 CTS / LCA</td>
+            <td><span class="partial">△ 旗艦以上</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span> Travel Assist</td>
+            <td><span class="check">●</span> Travel Assist</td>
+          </tr>
+          <tr><td class="feature-section" colspan="5">盲點 / 後方警示</td></tr>
+          <tr>
+            <td>盲點偵測 BSM</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span> Side Assist</td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>後車穿越警示 RCTA</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>安全出門警示 SEW</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span> <small style="color:var(--gold)">2026新增</small></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="cross">○</span></td>
+          </tr>
+          <tr>
+            <td>倒車防撞 SBS-R</td>
+            <td><span class="partial">△ 高階車型</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="cross">○</span></td>
+          </tr>
+          <tr><td class="feature-section" colspan="5">其他安全</td></tr>
+          <tr>
+            <td>駕駛疲勞警示</td>
+            <td><span class="check">●</span> DAA</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span> Drive Alert</td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>速限辨識警示</td>
+            <td><span class="partial">△ 需搭配導航</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>360 環景影像</td>
+            <td><span class="partial">△ 旗艦以上</span></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="cross">○</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 03 被動安全 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <div>
+        <div class="section-title">被動安全 & 車體結構</div>
+        <div class="section-desc">碰撞認證、氣囊數量、車體平台</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <div class="car-card">
+        <div class="card-header">
+          <div class="car-badge badge-a">A</div>
+          <div><div class="card-title">Mazda CX-30</div><div class="card-sub">SKYACTIV 車體架構</div></div>
+        </div>
+        <div class="card-body">
+          <ul class="spec-list">
+            <li class="spec-item"><span class="spec-key">安全氣囊</span><span class="spec-val">7 具 SRS 全套</span></li>
+            <li class="spec-item"><span class="spec-key">NCAP 認證</span><span class="spec-val"><span class="tag-good">Euro NCAP 5星</span></span></li>
+            <li class="spec-item"><span class="spec-key">車體平台</span><span class="spec-val">SKYACTIV 高強度鋼構</span></li>
+            <li class="spec-item"><span class="spec-key">電子手煞車</span><span class="spec-val">EPB + Auto Hold ✓</span></li>
+            <li class="spec-item"><span class="spec-key">胎壓偵測</span><span class="spec-val">TPMS 直接式 ✓</span></li>
+            <li class="spec-item"><span class="spec-key">評分</span><span class="spec-val"><span class="tag-ok">★★★★☆ 4.0</span></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="car-card">
+        <div class="card-header">
+          <div class="car-badge badge-b">B</div>
+          <div><div class="card-title">KIA STONIC 2026</div><div class="card-sub">Kia K2 平台</div></div>
+        </div>
+        <div class="card-body">
+          <ul class="spec-list">
+            <li class="spec-item"><span class="spec-key">安全氣囊</span><span class="spec-val">6 具 SRS</span></li>
+            <li class="spec-item"><span class="spec-key">NCAP 認證</span><span class="spec-val"><span class="tag-good">Euro NCAP 5星</span></span></li>
+            <li class="spec-item"><span class="spec-key">車體平台</span><span class="spec-val">強化輕量化鋼構</span></li>
+            <li class="spec-item"><span class="spec-key">電子手煞車</span><span class="spec-val">2026款新增 EPB ✓</span></li>
+            <li class="spec-item"><span class="spec-key">胎壓偵測</span><span class="spec-val">TPMS ✓</span></li>
+            <li class="spec-item"><span class="spec-key">評分</span><span class="spec-val"><span class="tag-ok">★★★★☆ 4.0</span></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="car-card">
+        <div class="card-header">
+          <div class="car-badge badge-c">C</div>
+          <div><div class="card-title">ŠKODA Kamiq</div><div class="card-sub">VAG MQB 模組平台</div></div>
+        </div>
+        <div class="card-body">
+          <ul class="spec-list">
+            <li class="spec-item"><span class="spec-key">安全氣囊</span><span class="spec-val"><span class="tag-good">同級最多 9 具</span></span></li>
+            <li class="spec-item"><span class="spec-key">NCAP 認證</span><span class="spec-val"><span class="tag-good">Euro NCAP 5星（成人碰撞96%）</span></span></li>
+            <li class="spec-item"><span class="spec-key">車體平台</span><span class="spec-val">MQB 高剛性模組平台</span></li>
+            <li class="spec-item"><span class="spec-key">Crew Protect</span><span class="spec-val">前座乘員主動防護 ✓</span></li>
+            <li class="spec-item"><span class="spec-key">XDS+ 差速器</span><span class="spec-val">同級唯一標配 ✓</span></li>
+            <li class="spec-item"><span class="spec-key">評分</span><span class="spec-val"><span class="tag-good">★★★★★ 5.0</span></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="car-card">
+        <div class="card-header">
+          <div class="car-badge badge-d">D</div>
+          <div><div class="card-title">VW The T-Roc</div><div class="card-sub">VAG MQB 模組平台</div></div>
+        </div>
+        <div class="card-body">
+          <ul class="spec-list">
+            <li class="spec-item"><span class="spec-key">安全氣囊</span><span class="spec-val">6 具 SRS（雙前座＋側面＋氣簾）</span></li>
+            <li class="spec-item"><span class="spec-key">NCAP 認證</span><span class="spec-val"><span class="tag-good">Euro NCAP 5星</span></span></li>
+            <li class="spec-item"><span class="spec-key">車體平台</span><span class="spec-val">MQB 高剛性模組平台</span></li>
+            <li class="spec-item"><span class="spec-key">MCB 二次碰撞</span><span class="spec-val">主動煞車保護 ✓</span></li>
+            <li class="spec-item"><span class="spec-key">電子手煞車</span><span class="spec-val">EPB + Auto Hold ✓</span></li>
+            <li class="spec-item"><span class="spec-key">評分</span><span class="spec-val"><span class="tag-ok">★★★★☆ 4.0</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 04 車載智能科技 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <div>
+        <div class="section-title">車載智能科技 & 數位化座艙</div>
+        <div class="section-desc">螢幕尺寸、連網能力、APP控制、HUD 等</div>
+      </div>
+    </div>
+    <div class="table-wrap">
+      <table class="feature-table">
+        <thead>
+          <tr>
+            <th>科技功能</th>
+            <th style="color:var(--a)">A CX-30</th>
+            <th style="color:var(--b)">B STONIC</th>
+            <th style="color:var(--c)">C Kamiq</th>
+            <th style="color:var(--d)">D T-Roc</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="feature-section" colspan="5">螢幕 / 儀表</td></tr>
+          <tr>
+            <td>中控螢幕尺寸</td>
+            <td>8.8 吋觸控</td>
+            <td><strong style="color:var(--gold)">12.3 吋</strong>大螢幕</td>
+            <td>8.25 吋懸浮式</td>
+            <td>9.2 吋（頂規）</td>
+          </tr>
+          <tr>
+            <td>數位儀表板</td>
+            <td>12 吋全彩液晶</td>
+            <td><strong style="color:var(--gold)">12.3 吋</strong>雙聯屏</td>
+            <td>10.25 吋全彩</td>
+            <td>10.25 吋</td>
+          </tr>
+          <tr>
+            <td>抬頭顯示器 HUD</td>
+            <td><span class="partial">△ 部分車型選配</span></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="cross">○</span></td>
+          </tr>
+          <tr><td class="feature-section" colspan="5">連線 / 手機整合</td></tr>
+          <tr>
+            <td>無線 Apple CarPlay</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>無線 Android Auto</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>手機無線充電</td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>原廠 APP 遠端控制</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span> Kia Connect App</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="partial">△ We Connect</span></td>
+          </tr>
+          <tr>
+            <td>數位鑰匙（手機感應）</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span> <small style="color:var(--gold)">2026新增</small></td>
+            <td><span class="cross">○</span></td>
+            <td><span class="cross">○</span></td>
+          </tr>
+          <tr>
+            <td>車輛遠端診斷/監控</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span> Kia Connect</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="partial">△ 基本版</span></td>
+          </tr>
+          <tr><td class="feature-section" colspan="5">其他智能功能</td></tr>
+          <tr>
+            <td>電動尾門</td>
+            <td><span class="check">●</span> 全車系標配</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span> 感應開啟</td>
+          </tr>
+          <tr>
+            <td>車室氛圍燈</td>
+            <td><span class="cross">○</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span> LED 雙色</td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>恆溫空調（雙區）</td>
+            <td><span class="partial">△ 高階車型</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="check">●</span></td>
+          </tr>
+          <tr>
+            <td>前座加熱座椅</td>
+            <td><span class="partial">△ 高階車型</span></td>
+            <td><span class="check">●</span></td>
+            <td><span class="partial">△ 選配</span></td>
+            <td><span class="partial">△ 高階車型</span></td>
+          </tr>
+          <tr>
+            <td>USB Type-C 充電孔數</td>
+            <td>2個</td>
+            <td>2個（Type-A 為主）</td>
+            <td><strong style="color:var(--gold)">4個 45W</strong></td>
+            <td>2–3 個</td>
+          </tr>
+          <tr>
+            <td>Matrix LED 智慧頭燈</td>
+            <td><span class="partial">△ 部分車型 ALH</span></td>
+            <td><span class="partial">△ GT-Line</span></td>
+            <td><span class="check">●</span> 全車系標配</td>
+            <td><span class="check">●</span> IQ.LIGHT</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 05 動力 & 功能性 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <div>
+        <div class="section-title">動力系統 & 功能規格</div>
+        <div class="section-desc">引擎效能、油耗、空間尺寸、機能設計</div>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <div class="car-card">
+        <div class="card-header">
+          <div class="car-badge badge-a">A</div>
+          <div><div class="card-title">Mazda CX-30</div><div class="card-sub">2.0L 自然進氣 ＋ 6AT</div></div>
+        </div>
+        <div class="card-body">
+          <ul class="spec-list">
+            <li class="spec-item"><span class="spec-key">最大馬力</span><span class="spec-val">165 hp</span></li>
+            <li class="spec-item"><span class="spec-key">最大扭力</span><span class="spec-val">21.7 kg-m</span></li>
+            <li class="spec-item"><span class="spec-key">平均油耗</span><span class="spec-val">15.0 km/L（無怠速熄火）</span></li>
+            <li class="spec-item"><span class="spec-key">輕油電</span><span class="spec-val"><span class="tag-weak">無</span></span></li>
+            <li class="spec-item"><span class="spec-key">行李廂容積</span><span class="spec-val">422L</span></li>
+            <li class="spec-item"><span class="spec-key">駕駛質感</span><span class="spec-val"><span class="tag-good">人馬一體 同級最佳</span></span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="car-card">
+        <div class="card-header">
+          <div class="car-badge badge-b">B</div>
+          <div><div class="card-title">KIA STONIC 2026</div><div class="card-sub">1.0T 48V 輕油電 ＋ 7DCT</div></div>
+        </div>
+        <div class="card-body">
+          <ul class="spec-list">
+            <li class="spec-item"><span class="spec-key">最大馬力</span><span class="spec-val">115 hp（MHEV 版）</span></li>
+            <li class="spec-item"><span class="spec-key">最大扭力</span><span class="spec-val">20.4 kg-m（MHEV 200Nm）</span></li>
+            <li class="spec-item"><span class="spec-key">平均油耗</span><span class="spec-val"><span class="tag-good">17.8 km/L（同級出色）</span></span></li>
+            <li class="spec-item"><span class="spec-key">輕油電</span><span class="spec-val"><span class="tag-good">48V MHEV 全車系標配</span></span></li>
+            <li class="spec-item"><span class="spec-key">行李廂容積</span><span class="spec-val">352L（較小）</span></li>
+            <li class="spec-item"><span class="spec-key">車身尺寸</span><span class="spec-val">4165 mm（最緊湊）</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="car-card">
+        <div class="card-header">
+          <div class="car-badge badge-c">C</div>
+          <div><div class="card-title">ŠKODA Kamiq</div><div class="card-sub">1.0T / 1.5T EVO2 ＋ 7DSG</div></div>
+        </div>
+        <div class="card-body">
+          <ul class="spec-list">
+            <li class="spec-item"><span class="spec-key">最大馬力</span><span class="spec-val">115 hp（1.0T） / 150 hp（1.5T）</span></li>
+            <li class="spec-item"><span class="spec-key">最大扭力</span><span class="spec-val">20.4 / 25.5 kg-m</span></li>
+            <li class="spec-item"><span class="spec-key">平均油耗</span><span class="spec-val">EVO2 較前代提升 7%</span></li>
+            <li class="spec-item"><span class="spec-key">XDS+差速器</span><span class="spec-val"><span class="tag-good">同級唯一標配</span></span></li>
+            <li class="spec-item"><span class="spec-key">行李廂容積</span><span class="spec-val">400L</span></li>
+            <li class="spec-item"><span class="spec-key">Simply Clever</span><span class="spec-val">實用小設計最多</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="car-card">
+        <div class="card-header">
+          <div class="car-badge badge-d">D</div>
+          <div><div class="card-title">VW The T-Roc</div><div class="card-sub">1.5T 280 / 2.0T 330 ＋ 7DSG</div></div>
+        </div>
+        <div class="card-body">
+          <ul class="spec-list">
+            <li class="spec-item"><span class="spec-key">最大馬力</span><span class="spec-val">150 hp（280） / 190 hp（330）</span></li>
+            <li class="spec-item"><span class="spec-key">最大扭力</span><span class="spec-val">25.5 / 32.6 kg-m</span></li>
+            <li class="spec-item"><span class="spec-key">平均油耗</span><span class="spec-val">16.3 km/L（280 TSI）</span></li>
+            <li class="spec-item"><span class="spec-key">四驅</span><span class="spec-val"><span class="tag-good">330 TSI 標配 4Motion</span></span></li>
+            <li class="spec-item"><span class="spec-key">行李廂容積</span><span class="spec-val">445L（最大）</span></li>
+            <li class="spec-item"><span class="spec-key">運動調校</span><span class="spec-val"><span class="tag-good">同級動力最強</span></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 最終裁定 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <div>
+        <div class="section-title">最終裁定 & 總排名</div>
+        <div class="section-desc">功能安全智能三維度綜合評分</div>
+      </div>
+    </div>
+
+    <div class="verdict-grid">
+      <div class="verdict-card va">
+        <div class="verdict-badge">— A —</div>
+        <div class="verdict-name">Mazda CX-30</div>
+        <div class="verdict-score-big">23.5</div>
+        <div class="verdict-rank">綜合排名 第 4 位</div>
+        <div class="verdict-pros">駕駛質感同級最佳，內裝工藝精緻，空間寬裕，ADAS 整合度高</div>
+        <br>
+        <div class="verdict-cons">2.0升稅金最重，智能科技相對保守，無輕油電，HUD 需付費升級</div>
+      </div>
+
+      <div class="verdict-card vb">
+        <div class="verdict-badge">— B —</div>
+        <div class="verdict-name">KIA STONIC 2026</div>
+        <div class="verdict-score-big">24.5</div>
+        <div class="verdict-rank">綜合排名 第 3 位</div>
+        <div class="verdict-pros">改款幅度最大、48V 輕油電省稅省油、數位座艙最現代、Kia App 遠端控制領先</div>
+        <br>
+        <div class="verdict-cons">車室空間最小（352L）、苗栗維修支援相對薄弱</div>
+      </div>
+
+      <div class="verdict-card vc">
+        <div class="verdict-badge">— C —</div>
+        <div class="verdict-name">ŠKODA Kamiq</div>
+        <div class="verdict-score-big">25.0</div>
+        <div class="verdict-rank">綜合排名 並列第 1 位</div>
+        <div class="verdict-pros">同級最多 9 氣囊、Euro NCAP 成人96%頂分、Matrix LED 全標配、XDS+ 差速器同級唯一</div>
+        <br>
+        <div class="verdict-cons">苗栗無授權廠（須至台中）、智能 App 連線功能不足</div>
+      </div>
+
+      <div class="verdict-card vd">
+        <div class="verdict-badge">— D —</div>
+        <div class="verdict-name">VW The T-Roc</div>
+        <div class="verdict-score-big">25.0</div>
+        <div class="verdict-rank">綜合排名 並列第 1 位</div>
+        <div class="verdict-pros">動力最強（330 TSI 四驅）、IQ.LIGHT 全標配、Travel Assist 整合 ACC+車道置中、行李廂最大</div>
+        <br>
+        <div class="verdict-cons">新車售價最高（115萬起）、苗栗無授權廠、養車工資最貴</div>
+      </div>
+    </div>
+
+    <!-- 最終建議 -->
+    <div class="recommend-box">
+      <div class="recommend-title">🎯 針對您（台中北區 ／ 苗栗南苗）的最終建議</div>
+      <div class="recommend-text">
+        在功能、安全、智能三維度下，<strong>ŠKODA Kamiq 與 VW T-Roc 並列第一</strong>——前者被動安全最全面，後者動力與主動輔助最強。然而，兩車<strong>苗栗均無授權保養廠</strong>，每次進廠都需回台中，長期使用的隱性成本與不便不可忽視。<br><br>
+        若將「智能科技進化幅度」列為首要考量，<strong>KIA STONIC 2026 是本次最值得關注的黑馬</strong>——NSCC 導航巡航、HDA 高速輔助、數位鑰匙、Kia App 遠端監控，這些功能在同價位中無出其右，且 48V 輕油電兼顧稅金與油耗。<br><br>
+        若您最優先考量<strong>整體用車便利性（含苗栗維修）與長期 C/P 值</strong>，<strong>Mazda CX-30 仍是最穩妥的選擇</strong>——在台中與苗栗均有完整授權廠，駕駛質感業界領先，品牌保固政策持續強化，是40年駕車經驗者最能放心的長期夥伴。
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="report-footer">
+  本報告由 Claude AI 協助彙整 ／ 資料來源：台灣各原廠官網、U-CAR、8891、KingAutos ／ 2026.04 版
+</div>
+
+</body>
+</html>
